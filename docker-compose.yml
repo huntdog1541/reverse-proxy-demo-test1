@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.0
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080" # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
+
+  portal:
+    image: nginx:alpine
+    volumes:
+      - ./portal:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portal.rule=Host(`portal.localhost`)"
+      - "traefik.http.services.portal.loadbalancer.server.port=80"
+    networks:
+      - web
+
+  site-a:
+    image: nginx:alpine
+    volumes:
+      - ./site-a:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sitea.rule=Host(`site-a.localhost`)"
+      - "traefik.http.services.sitea.loadbalancer.server.port=80"
+    networks:
+      - web
+
+  site-b:
+    image: nginx:alpine
+    volumes:
+      - ./site-b:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.siteb.rule=Host(`site-b.localhost`)"
+      - "traefik.http.services.siteb.loadbalancer.server.port=80"
+    networks:
+      - web
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  portainer_data:

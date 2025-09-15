@@ -49,8 +49,8 @@ cd reverse-proxy-demo
 2. Update hostnames
 In docker-compose.yml, replace:
 
-css
-Copy code
+
+
 portal.localhost
 site-a.localhost
 site-b.localhost
@@ -60,12 +60,11 @@ or add them to your local /etc/hosts file for local testing.
 
 Example entry for /etc/hosts:
 
-css
-Copy code
+
 127.0.0.1 portal.localhost site-a.localhost site-b.localhost controller.localhost
 3. Start all containers
 bash
-Copy code
+
 docker compose up -d --build
 4. Access the services
 Portal: http://portal.localhost
@@ -82,22 +81,18 @@ Traefik Dashboard: http://localhost:8080
 Start everything:
 
 bash
-Copy code
 docker compose start
 Stop everything:
 
 bash
-Copy code
 docker compose stop
 Completely remove everything:
 
 bash
-Copy code
 docker compose down
 Rebuild after code changes:
 
 bash
-Copy code
 docker compose up -d --build
 ⚙️ Start / Stop Individual Containers
 From terminal:
@@ -121,7 +116,6 @@ Stopped containers are not routed until restarted.
 This is for demonstration/development — add authentication to secure it before exposing publicly.
 
 pgsql
-Copy code
 
 ---
 

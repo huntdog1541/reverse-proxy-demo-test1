@@ -1,0 +1,11 @@
+{
+  "name": "controller",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "dependencies": {
+    "dockerode": "^4.0.2",
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

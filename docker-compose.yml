@@ -9,9 +9,20 @@ services:
       - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
-      - "8080:8080" # Traefik dashboard
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
+
+  controller:
+    build: ./controller
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.controller.rule=Host(`controller.localhost`)"
+      - "traefik.http.services.controller.loadbalancer.server.port=3000"
     networks:
       - web
 
@@ -48,19 +59,5 @@ services:
     networks:
       - web
 
-  portainer:
-    image: portainer/portainer-ce:latest
-    command: -H unix:///var/run/docker.sock
-    ports:
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    networks:
-      - web
-
 networks:
   web:
-
-volumes:
-  portainer_data:

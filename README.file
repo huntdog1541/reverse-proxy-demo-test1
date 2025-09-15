@@ -1,0 +1,130 @@
+# 🧩 Reverse Proxy Demo with Container Control
+
+This project is a demonstration platform that hosts multiple websites in individual Docker containers behind a reverse proxy.
+
+It includes:
+
+- [Traefik](https://traefik.io/) reverse proxy with automatic routing
+- Two example websites (Site A and Site B)
+- A portal site to view and control the sites
+- A Node.js controller service to start/stop containers from the portal
+- Optional Traefik dashboard to monitor routing
+
+---
+
+## 📁 Project Structure
+
+reverse-proxy-demo/
+│
+├── docker-compose.yml
+├── portal/ # Selector UI
+│ ├── index.html
+│ └── script.js
+├── controller/ # Node.js API to start/stop containers
+│ ├── Dockerfile
+│ ├── package.json
+│ └── server.js
+├── site-a/index.html
+└── site-b/index.html
+
+yaml
+Copy code
+
+---
+
+## ⚙️ Requirements
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone this repository
+
+```bash
+git clone https://github.com/yourusername/reverse-proxy-demo.git
+cd reverse-proxy-demo
+2. Update hostnames
+In docker-compose.yml, replace:
+
+css
+Copy code
+portal.localhost
+site-a.localhost
+site-b.localhost
+controller.localhost
+with real DNS hostnames pointing to your cloud VM,
+or add them to your local /etc/hosts file for local testing.
+
+Example entry for /etc/hosts:
+
+css
+Copy code
+127.0.0.1 portal.localhost site-a.localhost site-b.localhost controller.localhost
+3. Start all containers
+bash
+Copy code
+docker compose up -d --build
+4. Access the services
+Portal: http://portal.localhost
+
+Site A: http://site-a.localhost
+
+Site B: http://site-b.localhost
+
+Controller API: http://controller.localhost
+
+Traefik Dashboard: http://localhost:8080
+
+⚡ Start / Stop All Containers
+Start everything:
+
+bash
+Copy code
+docker compose start
+Stop everything:
+
+bash
+Copy code
+docker compose stop
+Completely remove everything:
+
+bash
+Copy code
+docker compose down
+Rebuild after code changes:
+
+bash
+Copy code
+docker compose up -d --build
+⚙️ Start / Stop Individual Containers
+From terminal:
+
+bash
+Copy code
+docker compose stop site-a
+docker compose start site-a
+From the Portal:
+
+Use the Start / Stop buttons in the portal UI.
+These call the controller API to start/stop containers via the Docker socket.
+
+📝 Notes
+All services run on the same web Docker network.
+
+Traefik automatically detects containers and routes based on their labels.
+
+Stopped containers are not routed until restarted.
+
+This is for demonstration/development — add authentication to secure it before exposing publicly.
+
+pgsql
+Copy code
+
+---
+
+If you want, I can now **extend the README with a “Security” section** to protect the controller with a username/password so no one else can start/stop your containers remotely.
+
+Would you like me to add that section next?

@@ -1,31 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 <head>
-    <meta charset="utf-8" />
-    <title>Website Selector</title>
+    <meta charset="utf-8">
+    <title>Website Portal</title>
     <script src="script.js" defer></script>
     <style>
-        body { background: #222; color: #fff; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        a, button {
-            display: block; margin: 10px auto; padding: 15px; width: 250px;
-            background: #444; color: #fff; text-decoration: none; border-radius: 8px; border:none; cursor:pointer;
-        }
-        a:hover, button:hover { background: #666; }
+        body { background:#222; color:#fff; font-family:sans-serif; text-align:center; padding:30px; }
+        a, button { display:block; margin:10px auto; padding:10px; width:250px; background:#444; color:#fff; border:none; border-radius:8px; text-decoration:none; cursor:pointer; }
+        input { padding:10px; width:250px; margin:5px; border-radius:8px; border:none; }
+        a:hover, button:hover { background:#666; }
     </style>
 </head>
 <body>
-<h1>Select a Demo Site</h1>
-<div id="site-a-controls">
-    <a href="http://site-a.localhost">Visit Site A</a>
-    <button onclick="toggleSite('site-a','start')">Start Site A</button>
-    <button onclick="toggleSite('site-a','stop')">Stop Site A</button>
-    <p>Status: <span id="site-a-status">Loading...</span></p>
-</div>
-<div id="site-b-controls">
-    <a href="http://site-b.localhost">Visit Site B</a>
-    <button onclick="toggleSite('site-b','start')">Start Site B</button>
-    <button onclick="toggleSite('site-b','stop')">Stop Site B</button>
-    <p>Status: <span id="site-b-status">Loading...</span></p>
-</div>
+<h1>Dynamic Website Portal</h1>
+
+<h2>Create a New Site</h2>
+<input id="newName" placeholder="Site name (e.g. demo1)">
+<input id="newHost" placeholder="Hostname (e.g. demo1.localhost)">
+<button onclick="createSite()">Create Site</button>
+
+<h2>Existing Sites</h2>
+<div id="siteList">Loading...</div>
 </body>
 </html>
